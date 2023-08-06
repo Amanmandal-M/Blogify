@@ -1,10 +1,10 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const { SeqConnection } = require("../configs/db");
 
-const UserModel = SeqConnection.define(
-  "User",
+const adminModel = SeqConnection.define(
+  "Admin",
   {
-    username: {
+    Name: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true
@@ -37,9 +37,4 @@ const UserModel = SeqConnection.define(
   }
 );
 
-UserModel.associate = models => {
-  UserModel.hasMany(models.BlogPost, { foreignKey: 'authorId' });
-  UserModel.hasMany(models.Comment, { foreignKey: 'commenterId' });
-};
-
-module.exports = { UserModel };
+module.exports = { adminModel };

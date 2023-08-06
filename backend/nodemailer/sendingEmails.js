@@ -15,7 +15,7 @@ const sendEmail = async (data) => {
   transporter.sendMail({
     to: `${data.email}`,
     from: process.env.EMAIL_ID,
-    subject: "Blogify Services >>",
+    subject: `${data.subject}`,
     html: `${data.body}`,
   })
   .then(()=>console.log('Mail sent successfully'))
