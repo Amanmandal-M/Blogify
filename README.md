@@ -1,4 +1,4 @@
-# Blogify: Your Full-Stack Blogging Platform
+<h1 align="center"> Blogify: Your Full-Stack Blogging Platform </h1>
 
 <br>
 
