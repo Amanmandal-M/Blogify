@@ -48,7 +48,7 @@ Welcome to **Blogify**, your go-to platform for creating and sharing engaging bl
 
 ## API Documentation
 
-For detailed API documentation and available endpoints, refer to [API Documentation](api-documentation.md).
+For detailed API documentation and available endpoints, refer to [API Documentation](swaggerdocs).
 
 ## Deployment
 
