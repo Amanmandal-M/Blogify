@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { UserModel } = require("../models/userModel");
+const { UserModel } = require("../models/allModels");
 const { sendEmail } = require("../nodemailer/sendingEmails");
 
 const SECRET_KEY = process.env.SECRET_KEY;
@@ -66,7 +66,7 @@ const loginUser = async (req, res) => {
     }
 
     const token = jwt.sign({ userId: user.id }, SECRET_KEY, {
-      expiresIn: "1h",
+      expiresIn: "10h",
     });
 
     // Send login success email

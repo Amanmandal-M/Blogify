@@ -11,9 +11,6 @@ followRouter.post('/', followController.createFollow);
 // Get a single follow by ID
 followRouter.get('/:id', followController.getFollowById);
 
-// Update a follow by ID
-followRouter.put('/:id', followController.updateFollow);
-
 // Delete a follow by ID
 followRouter.delete('/:id', followController.deleteFollow);
 

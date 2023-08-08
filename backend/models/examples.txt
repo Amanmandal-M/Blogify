@@ -1,0 +1,56 @@
+================================================   
+
+/blogposts/ POST
+
+  {
+    "title": "Python vs. JavaScript: Choosing the Right Language",
+    "content": "Python and JavaScript are two popular programming languages...",
+    "publicationDate": "2023-08-25",
+    "categoryIds":[1,4,7],
+    "tagIds":[1],
+  }
+
+================================================   
+
+  /user/register POST
+
+  {
+    "username":"",
+    "email":"",
+    "password":"",
+    "profileImage":""
+  }
+
+================================================   
+  /user/login POST
+
+  {
+    "email":"",
+    "password":"", 
+  }
+
+================================================   
+  /category/ POST
+
+  {
+    "name":"",
+  }
+
+================================================   
+  /comments/  POST
+
+{
+  "text": "This is a great article! Thanks for sharing.",
+  "postId": 1
+}
+
+================================================   
+  /follows/  POST
+
+{
+  "followerId":1,
+  "followingId":2
+}
+
+
+

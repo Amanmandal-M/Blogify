@@ -1,4 +1,5 @@
 const express = require('express');
+const colors = require('colors');
 const path = require('path');
 require('dotenv').config();
 
@@ -42,15 +43,16 @@ app.get('/', (req, res) => {
 });
 
 // Error route
-app.use(errorRouter);
+// app.use(errorRouter);
 
 app.use('/user', userRouter);
 
-// Authentication for user 
-app.use(authenticateUser);
 
 // Private routes
 app.use('/blogposts', blogRouter);
+
+// Authentication for user 
+app.use(authenticateUser);
 app.use('/category', categoryRouter);
 app.use('/comments', commentRouter);
 app.use('/follows', followRouter);
@@ -58,7 +60,7 @@ app.use('/likes', likeRouter);
 app.use('/tags', tagRouter);
 app.use('/users/dashboard', userDashboardRouter);
  
-// Authentication for user 
+// Authentication for admin 
 app.use(adminKeyAuthenticator)
 app.use('/admin', adminRouter);
 
@@ -67,8 +69,8 @@ app.use('/admin', adminRouter);
 app.listen(PORT, async () => {
   try {
     await SeqConnection.authenticate();
-    console.log(`Server is listening on PORT: ${PORT}`);
+    console.log(colors.green(`Server is listening on PORT: ${PORT}`));
   } catch (error) {
-    console.error('Failed to connect to the database:', error);
+    console.error(colors.red('Failed to connect to the database:', error));
   }
 });

@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { UserModel } = require('../models/userModel');
+const { UserModel } = require('../models/allModels');
 
 const SECRET_KEY = process.env.SECRET_KEY;
 
@@ -22,7 +22,7 @@ const authenticateUser = async (req, res, next) => {
     if (!user) {
       return res.status(401).json({ error: 'User not found' });
     }
-
+    
     req.user = user; // Attach the user object to the request
     next(); // Proceed to the next middleware or route
   } catch (error) {

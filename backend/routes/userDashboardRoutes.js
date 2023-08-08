@@ -1,8 +1,8 @@
-const express = require('express');
+const express = require("express");
 const userDashboardRouter = express.Router();
-const userDashboardController = require('../controllers/userDashboardController');
+const userDashboardController = require("../controllers/userDashboardController");
 
 // Protected route, accessible only to authenticated users
-userDashboardRouter.get('/', userDashboardController.getUserDashboard);
+userDashboardRouter.get("/", userDashboardController.getUserDashboard);
 
 module.exports = userDashboardRouter;

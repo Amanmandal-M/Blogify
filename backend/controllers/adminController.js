@@ -1,23 +1,21 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { adminModel } = require("../models/adminModel");
-const { UserModel } = require("../models/userModel");
 const { sendEmail } = require("../nodemailer/sendingEmails");
+const { AdminModel,UserModel } = require("../models/allModels");
 
-const SECRET_KEY = process.env.ADMIN_JWT_KEY;
 
 const createAdmin = async (req, res) => {
   try {
     const { username, email, password, profileImage } = req.body;
 
-    const user = await adminModel.findOne({ where: { email } });
+    const user = await AdminModel.findOne({ where: { email } });
     if (user) {
       return res.status(400).json({ error: "Email already registered" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
     
-    const newUser = await adminModel.create({
+    const newUser = await AdminModel.create({
       username,
       email,
       password: hashedPassword,
@@ -54,7 +52,7 @@ const loginAdmin = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const user = await adminModel.findOne({ where: { email } });
+    const user = await AdminModel.findOne({ where: { email } });
     if (!user) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
