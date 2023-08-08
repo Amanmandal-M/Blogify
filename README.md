@@ -43,7 +43,7 @@ Welcome to **Blogify**, your go-to platform for creating and sharing engaging bl
 
 ## Getting Started
 
-1. Clone this repository: `git clone https://github.com/your-username/blogify.git`
+1. Clone this repository: `https://github.com/Amanmandal-M/Blogify.git`
 2. Navigate to the backend directory: `cd backend`
 3. Install backend dependencies: `npm install`
 4. Set up your MySQL database and configure `.env` file.
@@ -63,7 +63,7 @@ Welcome to **Blogify**, your go-to platform for creating and sharing engaging bl
 
 ## API Documentation
 
-For detailed API documentation and available endpoints, refer to [API Documentation](swaggerdocs).
+For detailed API documentation and available endpoints, refer to [API Documentation](/backend/APIDocs.md).
 
 <br>
 
