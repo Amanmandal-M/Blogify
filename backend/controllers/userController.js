@@ -1,13 +1,16 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { UserModel } = require("../models/allModels");
-const { sendEmail } = require("../nodemailer/sendingEmails");
+const { sendEmail } = require("../helpers/sendingEmails");
+const { generateOTP } = require("../helpers/otpHelper");
+const { sendSms } = require("../helpers/sendingOtpPhone");
 
 const SECRET_KEY = process.env.SECRET_KEY;
+var mainOtp;
 
 const createUser = async (req, res) => {
   try {
-    const { username, email, password, profileImage } = req.body;
+    const { username, email, password, profileImage, phoneNumber } = req.body;
 
     const user = await UserModel.findOne({ where: { email } });
     if (user) {
@@ -15,37 +18,46 @@ const createUser = async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    
+
+    const otp = generateOTP(); // Generate OTP
+    mainOtp=otp;
+
     const newUser = await UserModel.create({
       username,
       email,
       password: hashedPassword,
-      profileImage
+      profileImage,
     });
 
-// Send registration success email
-const emailData = {
-  email: newUser.email,
-  subject: "Welcome to Blogify - Registration Successful!",
-  body: `
-    <html>
-      <body style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
-        <h2>Welcome to Blogify!</h2>
-        <p>Thank you for registering with Blogify. You're now part of our community.</p>
-        <p>Feel free to explore and start sharing your thoughts through blog posts.</p>
-        <p>Happy blogging!</p>
-        <p>Best regards,</p>
-        <p>The Blogify Team</p>
-        <a href="">Now Proceed for Login</a>
-      </body>
-    </html>
-  `,
-};
-sendEmail(emailData);
+    // Send OTP through email
+    const emailData = {
+      email: newUser.email,
+      subject: "Welcome to Blogify - Registration OTP",
+      body: `
+        <html>
+          <body style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
+            <h2>Welcome to Blogify!</h2>
+            <p>Thank you for registering with Blogify. Please use the following OTP to complete your registration:</p>
+            <h3>${otp}</h3>
+            <p>Do not share this OTP with anyone.</p>
+            <p>Happy blogging!</p>
+            <p>Best regards,</p>
+            <p>The Blogify Team</p>
+            <a href="">Now Proceed for OTP Verification</a>
+          </body>
+        </html>
+      `,
+    };
+    sendEmail(emailData);
 
-    
+    // Send OTP through SMS
+    const smsData = {
+      toPhoneNumber: phoneNumber,
+      message: `Welcome to Blogify ${username}! Please use the following OTP to complete your registration: ${otp} . Do not share this OTP with anyone.`,
+    };
+    sendSms(smsData);
+
     res.status(201).json(newUser);
-    console.log(8)
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -53,7 +65,7 @@ sendEmail(emailData);
 
 const loginUser = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, otp } = req.body;
 
     const user = await UserModel.findOne({ where: { email } });
     if (!user) {
@@ -65,28 +77,14 @@ const loginUser = async (req, res) => {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
-    const token = jwt.sign({ userId: user.id }, SECRET_KEY, {
-      expiresIn: "10h",
-    });
+    // Validate OTP here (compare it with the OTP sent to the user during registration)
+    if (otp !== mainOtp) {
+      return res.status(401).json({ error: "Invalid OTP" });
+    }
 
-    // Send login success email
-    const emailData = {
-      email: user.email,
-      subject: "Login Successful - Welcome back to Blogify!",
-      body: `
-        <html>
-          <body style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
-            <h2>Welcome back to Blogify!</h2>
-            <p>You have successfully logged in to your Blogify account.</p>
-            <p>Feel free to explore and continue your journey in our blogging community.</p>
-            <p>Happy blogging!</p>
-            <p>Best regards,</p>
-            <p>The Blogify Team</p>
-          </body>
-        </html>
-      `,
-    };
-    sendEmail(emailData);
+    const token = jwt.sign({ userId: user.id }, SECRET_KEY, {
+      expiresIn: "24h",
+    });
 
     res.status(200).json({ token });
   } catch (error) {
@@ -96,5 +94,5 @@ const loginUser = async (req, res) => {
 
 module.exports = {
   createUser,
-  loginUser
+  loginUser,
 };
