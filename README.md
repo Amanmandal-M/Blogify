@@ -6,7 +6,7 @@ Welcome to **Blogify**, your go-to platform for creating and sharing engaging bl
 
 <br>
 
-![Blogify Screenshot](insert_screenshot_url_here)
+![Blogify Screenshot](./frontend/src/components/Assets/Screenshot%202023-08-09%20102959.png)
 
 <br>
  
