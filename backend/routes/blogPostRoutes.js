@@ -5,7 +5,7 @@ const blogPostController = require('../controllers/blogPostController');
 const { authenticateUser } = require('../middlewares/authMiddleware');
 
 // Get all blog posts
-blogRouter.get('/', authenticateUser, blogPostController.getAllBlogPosts);
+blogRouter.get('/', blogPostController.getAllBlogPosts);
 
 // Create a new blog post
 blogRouter.post('/', authenticateUser, blogPostController.createBlogPost);
