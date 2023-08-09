@@ -2,6 +2,7 @@
 
 <br>
 
+Backend URL : 'http://3.95.222.99:8080/'
 
 <!-- /user
 /blogposts

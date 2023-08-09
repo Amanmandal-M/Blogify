@@ -1,5 +1,6 @@
 const express = require('express');
 const colors = require('colors');
+const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
 
@@ -30,6 +31,7 @@ const { adminKeyAuthenticator } = require('./middlewares/adminAuthMiddleware');
 
 
 app.use(express.json());
+app.use(cors());
 
 // Set the view engine to EJS
 app.set('view engine', 'ejs'); // This line is crucial
