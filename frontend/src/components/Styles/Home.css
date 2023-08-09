@@ -1,0 +1,71 @@
+/* Home.css */
+.home-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .hero-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 40px;
+  }
+  
+  .hero-image {
+    max-width: 55%;
+    height: 100%;
+    border-radius: 12px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+  }
+  
+  .hero-content {
+    max-width: 43%;
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .hero-content h1 {
+    font-size: 2.8rem;
+    margin-bottom: 15px;
+    color: #333;
+  }
+  
+  .cta-button {
+    display: inline-block;
+    margin-top: 30px;
+    background-color: #ff9900;
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-size: 1.2rem;
+    text-decoration: none;
+    transition: background-color 0.3s;
+  }
+  
+  .cta-button:hover {
+    background-color: #e68a00;
+  }
+  
+  .about-section {
+    margin-top: 60px;
+    background-color: #f8f8f8;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .about-section h2 {
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .about-section p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #666;
+  }
+  
