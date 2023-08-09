@@ -43,7 +43,7 @@ const createUser = async (req, res) => {
             <p>Happy blogging!</p>
             <p>Best regards,</p>
             <p>The Blogify Team</p>
-            <a href="">Now Proceed for OTP Verification</a>
+            <a href="https://blogapp-gilt.vercel.app/login">Now Proceed for OTP Verification</a>
           </body>
         </html>
       `,
