@@ -48,6 +48,23 @@ export default function SignUp() {
   const handleSignUp = async (event) => {
     event.preventDefault();
 
+    if (
+      !formValues.username ||
+      !formValues.profileImage ||
+      !formValues.email ||
+      !formValues.password ||
+      !formValues.phoneNumber
+    ) {
+      Swal.fire({
+        icon: "warning",
+        title: "Empty Fields",
+        width: "30%",
+        text: "Please fill in all the fields",
+        timer: 3000,
+      });
+      return;
+    }
+
     try {
       // Send POST request using Axios
       const response = await axios.post(registerUrl, formValues);
