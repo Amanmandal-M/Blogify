@@ -1,4 +1,6 @@
 import { useState } from "react";
+import Swal from "sweetalert2";
+import axios from "axios";
 import { Link as RouterLink } from "react-router-dom";
 import React from "react";
 import {
@@ -19,7 +21,94 @@ import {
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
 export default function SignUp() {
+  const baseUrl = "http://18.208.158.182:8080";
+  const registerUrl = `${baseUrl}/user/register`;
+
   const [showPassword, setShowPassword] = useState(false);
+  const [formValues, setFormValues] = useState({
+    username: "",
+    profileImage: "",
+    email: "",
+    password: "",
+    phoneNumber: "",
+  });
+
+  const handleInputChange = (event) => {
+    const { id, value } = event.target;
+
+    // Convert phone number to integer using parseInt
+  const newValue = id === "phoneNumber" ? parseInt(value, 10) : value;
+
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      [id]: newValue,
+    }));
+  };
+
+  const handleSignUp = async (event) => {
+    event.preventDefault();
+
+    try {
+      // Send POST request using Axios
+      const response = await axios.post(registerUrl, formValues);
+
+      // Check the response status
+      if (response.status === 201) {
+        // Registration successful
+        Swal.fire({
+          icon: "success",
+          title: "Registration Successful",
+          width: "30%",
+          text:
+            "You have successfully registered! Please check your email or phone for OTP verification.",
+          timer:3500
+        }).then(() => {
+          window.location.href = "/login";
+        });
+
+        // Clear form values after successful registration
+        setFormValues({
+          username: "",
+          profileImage: "",
+          email: "",
+          password: "",
+          phoneNumber: "",
+        });
+      }
+    } catch (error) {
+      // Check the response status for 401
+      if (error.response && error.response.status === 401) {
+        // User already registered
+        Swal.fire({
+          icon: "warning",
+          title: "Already a Member",
+          width: "30%",
+          text: "Please proceed for Login",
+          timer: 3000,
+        }).then(() => {
+          // Redirect to login page
+          window.location.href = "/login";
+        });
+      } else {
+        // Other error status or network issue
+        Swal.fire({
+          icon: "error",
+          title: "Registration Error",
+          width: "30%",
+          text: "An error occurred during registration. Please try again.",
+        });
+      }
+  
+      // Clear form values after error
+      setFormValues({
+        username: "",
+        profileImage: "",
+        email: "",
+        password: "",
+        phoneNumber: "",
+      });
+    }
+  };
 
   return (
     <Flex
@@ -46,26 +135,44 @@ export default function SignUp() {
           <Stack spacing={4}>
             <HStack>
               <Box>
-                <FormControl id="userName" isRequired>
+                <FormControl id="username" isRequired>
                   <FormLabel>UserName</FormLabel>
-                  <Input type="text" />
+                  <Input
+                    type="text"
+                    value={formValues.username}
+                    onChange={handleInputChange}
+                    placeholder="Please create unique username"
+                  />
                 </FormControl>
               </Box>
               <Box>
-                <FormControl id="imageUrl">
+                <FormControl id="profileImage">
                   <FormLabel>Profile URL</FormLabel>
-                  <Input type="url" />
+                  <Input
+                    type="url"
+                    value={formValues.profileImage}
+                    onChange={handleInputChange}
+                    placeholder="Please enter URL of profile image any URL"
+                  />
                 </FormControl>
               </Box>
             </HStack>
             <FormControl id="email" isRequired>
               <FormLabel>Email address</FormLabel>
-              <Input type="email" />
+              <Input
+                type="email"
+                value={formValues.email}
+                onChange={handleInputChange}
+              />
             </FormControl>
             <FormControl id="password" isRequired>
               <FormLabel>Password</FormLabel>
               <InputGroup>
-                <Input type={showPassword ? "text" : "password"} />
+                <Input
+                  type={showPassword ? "text" : "password"}
+                  value={formValues.password}
+                  onChange={handleInputChange}
+                />
                 <InputRightElement h={"full"}>
                   <Button
                     variant={"ghost"}
@@ -78,9 +185,16 @@ export default function SignUp() {
                 </InputRightElement>
               </InputGroup>
             </FormControl>
-            <FormControl id="phone" isRequired>
+            <FormControl id="phoneNumber" isRequired>
               <FormLabel>Phone Number</FormLabel>
-              <Input type="number" max={10} min={10} />
+              <Input
+                type="number"
+                max={10}
+                min={10}
+                value={formValues.phoneNumber}
+                onChange={handleInputChange}
+                placeholder="Don't put 0 before your phone number"
+              />
             </FormControl>
             <Stack spacing={10} pt={2}>
               <Button
@@ -91,6 +205,7 @@ export default function SignUp() {
                 _hover={{
                   bg: "blue.500",
                 }}
+                onClick={handleSignUp}
               >
                 Sign up
               </Button>
