@@ -1,4 +1,6 @@
-import React from 'react'
+import { useState } from "react";
+import { Link as RouterLink } from "react-router-dom";
+import React from "react";
 import {
   Flex,
   Box,
@@ -13,46 +15,46 @@ import {
   Heading,
   Text,
   useColorModeValue,
-  Link,
-} from '@chakra-ui/react'
-import { useState } from 'react'
-import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
+} from "@chakra-ui/react";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
 export default function SignUp() {
-  const [showPassword, setShowPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <Flex
-      minH={'100vh'}
-      align={'center'}
-      justify={'center'}
-      bg={useColorModeValue('gray.50', 'gray.800')}>
-      <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
-        <Stack align={'center'}>
-          <Heading fontSize={'4xl'} textAlign={'center'}>
+      minH={"100vh"}
+      align={"center"}
+      justify={"center"}
+      bg={useColorModeValue("gray.50", "gray.800")}
+    >
+      <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
+        <Stack align={"center"}>
+          <Heading fontSize={"4xl"} textAlign={"center"}>
             Sign up
           </Heading>
-          <Text fontSize={'lg'} color={'gray.600'}>
+          <Text fontSize={"lg"} color={"gray.600"}>
             to enjoy all of our cool features ✌️
           </Text>
         </Stack>
         <Box
-          rounded={'lg'}
-          bg={useColorModeValue('white', 'gray.700')}
-          boxShadow={'lg'}
-          p={8}>
+          rounded={"lg"}
+          bg={useColorModeValue("white", "gray.700")}
+          boxShadow={"lg"}
+          p={8}
+        >
           <Stack spacing={4}>
             <HStack>
               <Box>
-                <FormControl id="firstName" isRequired>
-                  <FormLabel>First Name</FormLabel>
+                <FormControl id="userName" isRequired>
+                  <FormLabel>UserName</FormLabel>
                   <Input type="text" />
                 </FormControl>
               </Box>
               <Box>
-                <FormControl id="lastName">
-                  <FormLabel>Last Name</FormLabel>
-                  <Input type="text" />
+                <FormControl id="imageUrl">
+                  <FormLabel>Profile URL</FormLabel>
+                  <Input type="url" />
                 </FormControl>
               </Box>
             </HStack>
@@ -63,36 +65,47 @@ export default function SignUp() {
             <FormControl id="password" isRequired>
               <FormLabel>Password</FormLabel>
               <InputGroup>
-                <Input type={showPassword ? 'text' : 'password'} />
-                <InputRightElement h={'full'}>
+                <Input type={showPassword ? "text" : "password"} />
+                <InputRightElement h={"full"}>
                   <Button
-                    variant={'ghost'}
-                    onClick={() => setShowPassword((showPassword) => !showPassword)}>
+                    variant={"ghost"}
+                    onClick={() =>
+                      setShowPassword((showPassword) => !showPassword)
+                    }
+                  >
                     {showPassword ? <ViewIcon /> : <ViewOffIcon />}
                   </Button>
                 </InputRightElement>
               </InputGroup>
             </FormControl>
+            <FormControl id="phone" isRequired>
+              <FormLabel>Phone Number</FormLabel>
+              <Input type="number" max={10} min={10} />
+            </FormControl>
             <Stack spacing={10} pt={2}>
               <Button
                 loadingText="Submitting"
                 size="lg"
-                bg={'blue.400'}
-                color={'white'}
+                bg={"blue.400"}
+                color={"white"}
                 _hover={{
-                  bg: 'blue.500',
-                }}>
+                  bg: "blue.500",
+                }}
+              >
                 Sign up
               </Button>
             </Stack>
             <Stack pt={6}>
-              <Text align={'center'}>
-                Already a user? <Link color={'blue.400'}>Login</Link>
+              <Text align={"center"}>
+                Already a user?{" "}
+                <RouterLink to="/login" color={"blue.400"}>
+                  Login
+                </RouterLink>
               </Text>
             </Stack>
           </Stack>
         </Box>
       </Stack>
     </Flex>
-  )
+  );
 }
